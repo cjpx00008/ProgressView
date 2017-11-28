@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="progress_bg_color">#e4e4e4</color>
+
+    <color name="blue">#4896e9</color>
+    <color name="light_blue">#42b8ea</color>
+    <color name="green">#53e658</color>
+    <color name="yellow">#d9d365</color>
+    <color name="red">#f65161</color>
+    <color name="shadow">#81b9b6b6</color>
+
+    <color name="degree_line_color">#cdc9c8</color>
+    <color name="degree_text_color">#434343</color>
+    <color name="degree_light_text_color">#c2c2c2</color>
+
+    <color name="title_color">#8c8c8c</color>
+    <color name="progress_text_color">#707070</color>
+
+    <color name="arrow_content_color">#f65d5f</color>
+</resources>

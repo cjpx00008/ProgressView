@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">library</string>
+    <string name="default_title">实际发电率</string>
+</resources>
