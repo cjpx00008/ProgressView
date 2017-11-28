@@ -21,7 +21,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         mProgressView = (ProgressView) findViewById(R.id.progress_view);
-        mProgressView.setProgress(60);
+        mProgressView.setProgress(89f);
 
         mAnimBtn = (Button) findViewById(R.id.anim_btn);
         mAnimBtn.setOnClickListener(new View.OnClickListener() {

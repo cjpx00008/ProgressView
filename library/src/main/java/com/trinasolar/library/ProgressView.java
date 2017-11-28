@@ -39,10 +39,10 @@ public class ProgressView extends View {
     private static final int DEGREE_START_ANGLE = 140;
     private static final int DEGREE_SWEEP_ANGLE = 260;
 
-    private static final int DEGREE_LINE_COUNT = 50;
-    private static final float DEGREE_TEXT_COUNT = 20;
-    private static final float ROTATE_DEGREE = 270f / DEGREE_LINE_COUNT;
-    private static final float DEGREE_TEXT_ANGLE = 260f / (DEGREE_TEXT_COUNT + 1);
+    private static final int DEGREE_LINE_COUNT = 51;
+    private static final float DEGREE_TEXT_COUNT = 21;
+    private static final float ROTATE_DEGREE = 260f / (DEGREE_LINE_COUNT - 1);
+    private static final float DEGREE_TEXT_ANGLE = 260f / (DEGREE_TEXT_COUNT - 1);
 
     private static final float ARROW_RATIO = 260f / 100;
 
@@ -251,7 +251,7 @@ public class ProgressView extends View {
 
     private void drawArrow(Canvas canvas) {
         canvas.translate(mCenterX, mCenterY);
-//        canvas.rotate(45);
+        canvas.rotate(50);
         mArrowPath.moveTo(0, mLineStartY + -mArrowWidth / 2);
         mArrowPath.lineTo(-mArrowWidth / 2, mLineStartY - mArrowLength);
         RectF rect = new RectF();
@@ -304,13 +304,19 @@ public class ProgressView extends View {
         drawProgressText(canvas);
 
         canvas.drawBitmap(mDegreeBitmap, 0, 0, null);
-        canvas.rotate(mProgress * PROGRESS_RATIO + 45, mCenterX, mCenterY);
+        canvas.rotate(mProgress * ARROW_RATIO, mCenterX, mCenterY);
         canvas.drawBitmap(mArrowBitmap, 0, 0, null);
     }
 
     private void drawProgressText(Canvas canvas) {
         canvas.translate(mCenterX, mCenterY);
-        canvas.drawText(df.format(mProgress) + "%", 0, (mProgressTextPaint.descent() - mProgressTextPaint.ascent())/2, mProgressTextPaint);
+        if (mProgress == 0) {
+            canvas.drawText("0.00%", 0, (mProgressTextPaint.descent() - mProgressTextPaint.ascent())/2, mProgressTextPaint);
+        }
+        else  {
+            canvas.drawText(df.format(mProgress) + "%", 0, (mProgressTextPaint.descent() - mProgressTextPaint.ascent())/2, mProgressTextPaint);
+
+        }
         canvas.translate(-mCenterX, -mCenterY);
     }
 
@@ -318,32 +324,37 @@ public class ProgressView extends View {
         canvas.save();
 
         canvas.translate(mCenterX, mCenterY);
-        canvas.rotate(45 + ROTATE_DEGREE);
+        canvas.rotate(50);
 
-        for (int i = 0; i < DEGREE_LINE_COUNT - 1; i++) {
-            canvas.drawLine(0, mLineStartY, 0, mLineEndY, mDegreeLinePaint);
+        for (int i = 0; i < DEGREE_LINE_COUNT; i++) {
+            if (i % 5 == 0) {
+                canvas.drawLine(0, mLineStartY, 0, mLineEndY - dpToPx(3), mDegreeLinePaint);
+            }
+            else {
+                canvas.drawLine(0, mLineStartY, 0, mLineEndY, mDegreeLinePaint);
+            }
             canvas.rotate(ROTATE_DEGREE);
         }
-        canvas.rotate(90 + DEGREE_TEXT_ANGLE);
-        canvas.translate(0, mLineEndY - mDegreeLineHeight - dpToPx(3));
-        canvas.rotate(-45 - DEGREE_TEXT_ANGLE);
+        canvas.rotate(100 - ROTATE_DEGREE);
+        canvas.translate(0, mLineEndY - mDegreeLineHeight - dpToPx(5));
+        canvas.rotate(-50);
         canvas.drawText("0", 0, -mDegreeTextPaint.ascent()/2, mDegreeTextPaint);
-        canvas.rotate(45 + DEGREE_TEXT_ANGLE);
-        canvas.translate(0, -(mLineEndY - mDegreeLineHeight - dpToPx(3)));
-        for (int i = 0; i < DEGREE_TEXT_COUNT + 1; i++) {
+        canvas.rotate(50);
+        canvas.translate(0, -(mLineEndY - mDegreeLineHeight - dpToPx(5)));
+        for (int i = 0; i < DEGREE_TEXT_COUNT; i++) {
             if (i == 0) {
                 continue;
             }
             canvas.rotate(DEGREE_TEXT_ANGLE);
-            canvas.translate(0, mLineEndY - mDegreeLineHeight - dpToPx(3));
-            canvas.rotate(-45 - (i + 1) * DEGREE_TEXT_ANGLE);
+            canvas.translate(0, mLineEndY - mDegreeLineHeight - dpToPx(5));
+            canvas.rotate(-50 - i * DEGREE_TEXT_ANGLE);
             if (i % 2 == 0) {
                 canvas.drawText(String.valueOf(i * 5), 0, -mDegreeTextPaint.ascent() / 2, mDegreeTextPaint);
             } else {
                 canvas.drawText(String.valueOf(i * 5), 0, -mDegreeLightTextPaint.ascent() / 2, mDegreeLightTextPaint);
             }
-            canvas.rotate(45 + (i + 1) * DEGREE_TEXT_ANGLE);
-            canvas.translate(0, -(mLineEndY - mDegreeLineHeight - dpToPx(3)));
+            canvas.rotate(50 + i * DEGREE_TEXT_ANGLE);
+            canvas.translate(0, -(mLineEndY - mDegreeLineHeight - dpToPx(5)));
         }
 
 
