@@ -9,4 +9,4 @@
 * titleTextSize 标题字大小
 * progressTextSize 进度百分比文字大小
 
-
+![image](https://github.com/cjpx00008/ProgressView/tree/master/raw/anim.gif)
