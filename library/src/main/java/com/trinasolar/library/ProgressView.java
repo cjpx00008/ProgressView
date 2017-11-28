@@ -34,7 +34,7 @@ public class ProgressView extends View {
 
     private static final int PROGRESS_START_ANGLE = 135;
     private static final int PROGRESS_SWEEP_ANGLE = 270;
-    private static final float PROGRESS_RATIO = 270f/100;
+    private static final float PROGRESS_RATIO = 270f / 100;
 
     private static final int DEGREE_START_ANGLE = 140;
     private static final int DEGREE_SWEEP_ANGLE = 260;
@@ -77,11 +77,13 @@ public class ProgressView extends View {
     private float mDegreeBgPadding = dpToPx(40);
     private float mDegreeLineWidth = dpToPx(1);
     private float mDegreeLineHeight = dpToPx(7);
+    private float mDegreeTextPadding = dpToPx(12);
     private float mTitlePadding = dpToPx(30);
 
     private float mArrowWidth = dpToPx(24);
     private float mArrowPadding = dpToPx(3);
     private float mArrowCircleRadius = dpToPx(2);
+    private float mArrowCircleDistance = dpToPx(9);
     private float mArrowLength = dpToPx(44);
 
     private float mDegreeDefaultTextSize = dpToPx(12);
@@ -207,11 +209,11 @@ public class ProgressView extends View {
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        int width = MeasureSpec.getSize( widthMeasureSpec );
-        int height= MeasureSpec.getSize( heightMeasureSpec );
+        int width = MeasureSpec.getSize(widthMeasureSpec);
+        int height = MeasureSpec.getSize(heightMeasureSpec);
         mSize = width > height ? height : width;
         DisplayMetrics dm = getResources().getDisplayMetrics();
-        mSizeRatio = mSize / (float)dm.widthPixels;
+        mSizeRatio = mSize / (float) dm.widthPixels;
         initDrawData();
         initProgressShader();
         initDegreeBitmap();
@@ -221,9 +223,10 @@ public class ProgressView extends View {
     }
 
     /**
-     *  缩放控制
-     *  @author admin
-     *  create at 2017/11/27 16:10
+     * 缩放控制
+     *
+     * @author admin
+     * create at 2017/11/27 16:10
      */
 //    private void initPaintSize() {
 //        mProgressBgPaint.setStrokeWidth(mProgressWidth * mSizeRatio);
@@ -235,7 +238,6 @@ public class ProgressView extends View {
 //        mDegreeTextPaint.setTextSize(mDegreeDefaultTextSize * mSizeRatio);
 //        mDegreeLightTextPaint.setTextSize(mDegreeDefaultLightTextSize * mSizeRatio);
 //    }
-
     private void initDegreeBitmap() {
         mDegreeBitmap = Bitmap.createBitmap(mSize, mSize, Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(mDegreeBitmap);
@@ -272,7 +274,7 @@ public class ProgressView extends View {
         mArrowContentPaint.setColor(getResources().getColor(R.color.arrow_content_color));
         canvas.drawPath(mArrowPath, mArrowContentPaint);
         mArrowContentPaint.setColor(Color.WHITE);
-        canvas.drawCircle(0, mLineStartY - mArrowLength - dpToPx(9),mArrowCircleRadius, mArrowContentPaint);
+        canvas.drawCircle(0, mLineStartY - mArrowLength - mArrowCircleDistance, mArrowCircleRadius, mArrowContentPaint);
         mArrowPath.reset();
 
     }
@@ -284,7 +286,7 @@ public class ProgressView extends View {
         mDegreeBgRect = new RectF();
         mProgressRect.set(mProgressWidth / 2, mProgressWidth / 2, mSize - mProgressWidth / 2, mSize - mProgressWidth / 2);
         mDegreeBgRect.set(mProgressWidth / 2 + mDegreeBgPadding, mProgressWidth / 2 + mDegreeBgPadding, mSize - mProgressWidth / 2 - mDegreeBgPadding, mSize - mProgressWidth / 2 - mDegreeBgPadding);
-        mLineStartY = (mSize - mProgressWidth - mDegreeBgPadding)/2;
+        mLineStartY = (mSize - mProgressWidth - mDegreeBgPadding) / 2;
         mLineEndY = mLineStartY - mDegreeLineHeight;
     }
 
@@ -311,10 +313,9 @@ public class ProgressView extends View {
     private void drawProgressText(Canvas canvas) {
         canvas.translate(mCenterX, mCenterY);
         if (mProgress == 0) {
-            canvas.drawText("0.00%", 0, (mProgressTextPaint.descent() - mProgressTextPaint.ascent())/2, mProgressTextPaint);
-        }
-        else  {
-            canvas.drawText(df.format(mProgress) + "%", 0, (mProgressTextPaint.descent() - mProgressTextPaint.ascent())/2, mProgressTextPaint);
+            canvas.drawText("0.00%", 0, (mProgressTextPaint.descent() - mProgressTextPaint.ascent()) / 2, mProgressTextPaint);
+        } else {
+            canvas.drawText(df.format(mProgress) + "%", 0, (mProgressTextPaint.descent() - mProgressTextPaint.ascent()) / 2, mProgressTextPaint);
 
         }
         canvas.translate(-mCenterX, -mCenterY);
@@ -327,26 +328,21 @@ public class ProgressView extends View {
         canvas.rotate(50);
 
         for (int i = 0; i < DEGREE_LINE_COUNT; i++) {
-            if (i % 5 == 0) {
-                canvas.drawLine(0, mLineStartY, 0, mLineEndY - dpToPx(3), mDegreeLinePaint);
-            }
-            else {
-                canvas.drawLine(0, mLineStartY, 0, mLineEndY, mDegreeLinePaint);
-            }
+            canvas.drawLine(0, mLineStartY, 0, mLineEndY, mDegreeLinePaint);
             canvas.rotate(ROTATE_DEGREE);
         }
         canvas.rotate(100 - ROTATE_DEGREE);
-        canvas.translate(0, mLineEndY - mDegreeLineHeight - dpToPx(5));
+        canvas.translate(0, mLineEndY - mDegreeTextPadding);
         canvas.rotate(-50);
-        canvas.drawText("0", 0, -mDegreeTextPaint.ascent()/2, mDegreeTextPaint);
+        canvas.drawText("0", 0, -mDegreeTextPaint.ascent() / 2, mDegreeTextPaint);
         canvas.rotate(50);
-        canvas.translate(0, -(mLineEndY - mDegreeLineHeight - dpToPx(5)));
+        canvas.translate(0, -(mLineEndY - mDegreeTextPadding));
         for (int i = 0; i < DEGREE_TEXT_COUNT; i++) {
             if (i == 0) {
                 continue;
             }
             canvas.rotate(DEGREE_TEXT_ANGLE);
-            canvas.translate(0, mLineEndY - mDegreeLineHeight - dpToPx(5));
+            canvas.translate(0, mLineEndY - mDegreeTextPadding);
             canvas.rotate(-50 - i * DEGREE_TEXT_ANGLE);
             if (i % 2 == 0) {
                 canvas.drawText(String.valueOf(i * 5), 0, -mDegreeTextPaint.ascent() / 2, mDegreeTextPaint);
@@ -354,7 +350,7 @@ public class ProgressView extends View {
                 canvas.drawText(String.valueOf(i * 5), 0, -mDegreeLightTextPaint.ascent() / 2, mDegreeLightTextPaint);
             }
             canvas.rotate(50 + i * DEGREE_TEXT_ANGLE);
-            canvas.translate(0, -(mLineEndY - mDegreeLineHeight - dpToPx(5)));
+            canvas.translate(0, -(mLineEndY - mDegreeTextPadding));
         }
 
 
@@ -397,8 +393,7 @@ public class ProgressView extends View {
 
         if (mAnimator != null) {
             mAnimator.cancel();
-        }
-        else {
+        } else {
             mAnimator = ObjectAnimator.ofPropertyValuesHolder(this, holder);
             mAnimator.setDuration(2000);
             mAnimator.setInterpolator(new FastOutSlowInInterpolator());
