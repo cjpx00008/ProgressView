@@ -212,14 +212,19 @@ public class ProgressView extends View {
         int width = MeasureSpec.getSize(widthMeasureSpec);
         int height = MeasureSpec.getSize(heightMeasureSpec);
         mSize = width > height ? height : width;
+
+        setMeasuredDimension(mSize, mSize);
+    }
+
+    @Override
+    protected void onSizeChanged(int w, int h, int oldw, int oldh) {
+        super.onSizeChanged(w, h, oldw, oldh);
         DisplayMetrics dm = getResources().getDisplayMetrics();
         mSizeRatio = mSize / (float) dm.widthPixels;
         initDrawData();
         initProgressShader();
         initDegreeBitmap();
         initArrowBitmap();
-//        initPaintSize();
-        setMeasuredDimension(mSize, mSize);
     }
 
     /**
