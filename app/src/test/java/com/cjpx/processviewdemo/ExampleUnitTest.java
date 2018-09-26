@@ -1,4 +1,4 @@
-package com.trinasolar.processviewdemo;
+package com.cjpx.processviewdemo;
 
 import org.junit.Test;
 

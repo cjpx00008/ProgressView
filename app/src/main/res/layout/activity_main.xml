@@ -5,9 +5,9 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.trinasolar.processviewdemo.MainActivity">
+    tools:context="com.cjpx.processviewdemo.MainActivity">
 
-    <com.trinasolar.library.ProgressView
+    <com.cjpx.library.ProgressView
         android:id="@+id/progress_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />

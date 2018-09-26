@@ -1,4 +1,4 @@
-package com.trinasolar.library;
+package com.cjpx.processviewdemo;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
@@ -21,6 +21,6 @@ public class ExampleInstrumentedTest {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getTargetContext();
 
-        assertEquals("com.trinasolar.library.test", appContext.getPackageName());
+        assertEquals("com.trinasolar.processviewdemo", appContext.getPackageName());
     }
 }

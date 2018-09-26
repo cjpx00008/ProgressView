@@ -1,4 +1,4 @@
-package com.trinasolar.library;
+package com.cjpx.library;
 
 import org.junit.Test;
 

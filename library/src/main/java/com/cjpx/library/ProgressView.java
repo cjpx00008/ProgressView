@@ -1,4 +1,4 @@
-package com.trinasolar.library;
+package com.cjpx.library;
 
 import android.animation.Animator;
 import android.animation.Keyframe;
